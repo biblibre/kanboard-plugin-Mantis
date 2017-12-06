@@ -11,9 +11,7 @@ class Plugin extends Base
 {
     public function initialize()
     {
-        $this->hook->on('template:layout:css', array('template' => 'plugins/Mantis/notifs.css'));
         $this->template->hook->attach('template:config:integrations', 'Mantis:config/integration');
-        $this->template->hook->attach('template:board:task:icons', 'Mantis:task/icons');
 
         $this->externalTaskManager->register(new MantisExternalTaskProvider($this->container));
 
@@ -47,7 +45,7 @@ class Plugin extends Base
 
     public function getPluginHomepage()
     {
-        return 'https://github.com/biblibre/kanboard-plugin-mantis';
+        return 'https://github.com/biblibre/kanboard-plugin-Mantis';
     }
 }
 
