@@ -7,7 +7,7 @@ use Kanboard\Core\ExternalTask\ExternalTaskProviderInterface;
 use Kanboard\Core\ExternalTask\NotFoundException;
 use SoapClient;
 
-class MantisExternalTaskProvider extends Base implements ExternalTaskProviderInterface
+class MantisTaskProvider extends Base implements ExternalTaskProviderInterface
 {
     protected $soapClient;
 

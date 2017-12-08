@@ -3,12 +3,13 @@
 namespace Kanboard\Plugin\Mantis\Action;
 
 use Kanboard\Action\Base;
+use Kanboard\Model\TaskModel;
 
-class UpdateAction extends Base
+class CheckAction extends Base
 {
     public function getDescription()
     {
-        return 'update Mantis tasks';
+        return 'Check Mantis issues for changes';
     }
 
     public function doAction(array $data)
@@ -23,8 +24,14 @@ class UpdateAction extends Base
             $last_sync = $this->taskMetadataModel->get($task['id'], 'mantis_last_sync', '0');
             $last_updated = $t->getIssue()->last_updated;
             if ($last_updated > $last_sync) {
-                $this->queueManager->push($this->taskEventJob->withParams($task['id'], array(\Kanboard\Model\TaskModel::EVENT_UPDATE)));
-                $this->taskMetadataModel->save($task['id'], array('mantis_last_sync' => $last_updated));
+                $taskEventJob = $this->taskEventJob->withParams($task['id'], array(TaskModel::EVENT_UPDATE));
+                $this->queueManager->push($taskEventJob);
+
+                $this->taskMetadataModel->save($task['id'], array(
+                    'mantis_last_sync' => date('c'),
+                ));
+
+                $this->logger->info(sprintf('Mantis issue %d was updated (task #%d)', $task['reference'], $task['id']));
             }
         }
     }

@@ -32,8 +32,9 @@ class MantisTask implements ExternalTaskInterface
 
     public function getFormValues()
     {
+        $title = sprintf('MT %d %s [%s]', $this->issue->id, $this->issue->summary, $this->issue->project->name);
         return array(
-            'title' => $this->issue->summary,
+            'title' => $title,
             'description' => $this->issue->description,
             'reference' => $this->issue->id,
         );

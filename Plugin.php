@@ -4,18 +4,26 @@ namespace Kanboard\Plugin\Mantis;
 
 use Kanboard\Core\Plugin\Base;
 use Kanboard\Core\Translator;
-use Kanboard\Plugin\Mantis\ExternalTask\MantisExternalTaskProvider;
-use Kanboard\Plugin\Mantis\Action\UpdateAction;
+use Kanboard\Model\TaskModel;
+use Kanboard\Plugin\Mantis\ExternalTask\MantisTaskProvider;
+use Kanboard\Plugin\Mantis\Action\CheckAction;
+use Kanboard\Plugin\Mantis\Subscriber\MantisSubscriber;
 
 class Plugin extends Base
 {
     public function initialize()
     {
         $this->template->hook->attach('template:config:integrations', 'Mantis:config/integration');
+        $this->template->hook->attach('template:layout:css', 'plugins/Mantis/assets/css/Mantis.css');
 
-        $this->externalTaskManager->register(new MantisExternalTaskProvider($this->container));
+        $provider = new MantisTaskProvider($this->container);
+        $this->externalTaskManager->register($provider);
 
-        $this->actionManager->register(new UpdateAction($this->container));
+        $action = new CheckAction($this->container);
+        $this->actionManager->register($action);
+
+        $subscriber = new MantisSubscriber($this->container);
+        $this->dispatcher->addSubscriber($subscriber);
     }
 
     public function onStartup()
