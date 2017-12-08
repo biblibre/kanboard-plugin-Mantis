@@ -1,5 +1,5 @@
 <div class="page-header">
-    <h2><?= $this->text->e($project['name']) ?> &gt; <?= t('Mantis bug #%d', $external_task->getIssueId()) ?></h2>
+    <h2><?= $this->text->e($project['name']) ?> &gt; <?= t('Mantis Issue #%d', $external_task->getIssueId()) ?></h2>
 </div>
 
 <?= $this->form->hidden('project_id', $values) ?>

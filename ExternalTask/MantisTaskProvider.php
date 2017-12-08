@@ -23,7 +23,7 @@ class MantisTaskProvider extends Base implements ExternalTaskProviderInterface
 
     public function getMenuAddLabel()
     {
-        return 'Add a new Mantis issue';
+        return t('Add a new Mantis issue');
     }
 
     public function fetch($uri)
@@ -99,7 +99,7 @@ class MantisTaskProvider extends Base implements ExternalTaskProviderInterface
 
                 return $issue;
             } catch (\Exception $e) {
-                error_log('SOAP request failed : ' . $e->getMessage());
+                $this->logger->error('SOAP request failed : ' . $e->getMessage());
             }
         }
     }
