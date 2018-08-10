@@ -3,4 +3,4 @@
 </div>
 
 <?= $this->form->label(t('Issue ID'), 'id') ?>
-<?= $this->form->text('id', $values, array(), array('required')) ?>
+<?= $this->form->text('id', $values, array(), array('required', 'autofocus')) ?>
