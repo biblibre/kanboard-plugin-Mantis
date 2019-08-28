@@ -26,7 +26,7 @@ class MantisTaskProvider extends Base implements ExternalTaskProviderInterface
         return t('Add a new Mantis issue');
     }
 
-    public function fetch($uri)
+    public function fetch($uri, $project_id)
     {
         $issue = $this->getMantisIssue($uri);
         if (empty($issue)) {
