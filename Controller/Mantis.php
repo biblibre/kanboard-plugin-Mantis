@@ -13,7 +13,7 @@ class Mantis extends BaseController {
         }
 
         $provider = new MantisTaskProvider($this->container);
-        $mantisTask = $provider->fetch($task['external_uri']);
+        $mantisTask = $provider->fetch($task['external_uri'], $task['project_id']);
         if (!$mantisTask) {
             return $this->response->json(array('error' => 'mantis issue not found'));
         }
