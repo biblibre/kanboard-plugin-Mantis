@@ -15,6 +15,8 @@ class Plugin extends Base
     {
         $this->template->hook->attach('template:config:integrations', 'Mantis:config/integration');
         $this->template->hook->attach('template:layout:css', 'plugins/Mantis/assets/css/Mantis.css');
+        $this->template->hook->attach('template:layout:js', 'plugins/Mantis/assets/js/Mantis.js');
+        $this->template->hook->attach('template:board:task:footer', 'Mantis:layout/footer');
 
         $provider = new MantisTaskProvider($this->container);
         $this->externalTaskManager->register($provider);
@@ -24,6 +26,10 @@ class Plugin extends Base
 
         $subscriber = new MantisSubscriber($this->container);
         $this->dispatcher->addSubscriber($subscriber);
+
+        $this->route->addRoute('/mantis', 'Mantis', 'show', 'Mantis');
+
+        $this->helper->register('mantis', '\Kanboard\Plugin\Mantis\Helper\Mantis');
     }
 
     public function onStartup()
@@ -56,4 +62,3 @@ class Plugin extends Base
         return 'https://github.com/biblibre/kanboard-plugin-Mantis';
     }
 }
-
